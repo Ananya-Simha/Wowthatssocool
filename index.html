@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Thirty Days of Number Facts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Gabarito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F7F0FF;
+    --bg-dots: #E6D8FF;
+    --surface: #FFFFFF;
+    --ink: #2A1450;
+    --ink-soft: #6B5A8E;
+    --line: #2A1450;
+    --pink: #FF5FA2;
+    --sun: #FFD23F;
+    --tangerine: #FF8A3D;
+    --mint: #3DDC97;
+    --sky: #4CC9F0;
+    --grape: #8B6BFF;
+    --tile-ink: #2A1450;
+    --locked: #FFFFFF;
+    --shadow: #2A1450;
+    color-scheme: light;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1C1030;
+      --bg-dots: #2C1C48;
+      --surface: #2A1A45;
+      --ink: #FBF4FF;
+      --ink-soft: #C4B3E6;
+      --line: #FBF4FF;
+      --locked: #2A1A45;
+      --shadow: #0E0619;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1C1030;
+    --bg-dots: #2C1C48;
+    --surface: #2A1A45;
+    --ink: #FBF4FF;
+    --ink-soft: #C4B3E6;
+    --line: #FBF4FF;
+    --locked: #2A1A45;
+    --shadow: #0E0619;
+    color-scheme: dark;
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background-color: var(--bg);
+    background-image: radial-gradient(var(--bg-dots) 2px, transparent 2.5px);
+    background-size: 22px 22px;
+    color: var(--ink);
+    font-family: "Gabarito", "Trebuchet MS", system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.5;
+    min-height: 100%;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 32px 20px 64px; }
+
+  /* Hero */
+  .hero { text-align: center; margin-bottom: 28px; }
+  .title {
+    font-family: "Bagel Fat One", "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
+    font-weight: 400;
+    font-size: clamp(2.6rem, 9vw, 5.2rem);
+    line-height: 0.95;
+    margin: 0 0 12px;
+    letter-spacing: -0.01em;
+  }
+  .title span { display: inline-block; }
+  .title span:nth-child(6n+1) { color: var(--pink); }
+  .title span:nth-child(6n+2) { color: var(--tangerine); }
+  .title span:nth-child(6n+3) { color: var(--sun); -webkit-text-stroke: 2px var(--line); paint-order: stroke fill; }
+  .title span:nth-child(6n+4) { color: var(--mint); }
+  .title span:nth-child(6n+5) { color: var(--sky); }
+  .title span:nth-child(6n+6) { color: var(--grape); }
+  .title span:nth-child(odd) { transform: rotate(-4deg); }
+  .title span:nth-child(even) { transform: rotate(3deg) translateY(4px); }
+  .title .sp { width: 0.3em; }
+  .lede { color: var(--ink-soft); max-width: 44ch; margin: 0 auto; font-size: 1.1rem; }
+
+  /* Picker card */
+  .picker {
+    background: var(--surface);
+    border: 3px solid var(--line);
+    border-radius: 28px;
+    box-shadow: 6px 6px 0 var(--shadow);
+    padding: 24px;
+    margin: 0 auto 36px;
+    max-width: 560px;
+    text-align: center;
+  }
+  .picker h2 { margin: 0 0 4px; font-size: 1.35rem; font-weight: 800; }
+  .picker p { margin: 0; color: var(--ink-soft); }
+  .picker .btn { margin-top: 16px; }
+  .row { display: flex; gap: 12px; justify-content: center; align-items: stretch; flex-wrap: wrap; }
+  .num {
+    width: 140px;
+    font-family: "Bagel Fat One", "Arial Rounded MT Bold", sans-serif;
+    font-size: 2.6rem;
+    text-align: center;
+    color: var(--ink);
+    background: var(--bg);
+    border: 3px solid var(--line);
+    border-radius: 20px;
+    padding: 4px 8px;
+    -moz-appearance: textfield;
+  }
+  .num::-webkit-outer-spin-button, .num::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .btn {
+    font: inherit;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: #2A1450;
+    background: var(--sun);
+    border: 3px solid var(--line);
+    border-radius: 20px;
+    padding: 12px 28px;
+    box-shadow: 4px 4px 0 var(--shadow);
+    cursor: pointer;
+    transition: transform .08s, box-shadow .08s;
+  }
+  .btn:hover { background: #FFC300; }
+  .btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--shadow); }
+  .btn:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: 4px 4px 0 var(--shadow); }
+  :focus-visible { outline: 4px solid var(--sky); outline-offset: 3px; }
+  .msg { min-height: 1.5em; margin-top: 14px; font-weight: 600; }
+  .msg.err { color: var(--pink); }
+
+  .wait { display: none; }
+  .wait.on { display: block; }
+  .clock {
+    font-family: "Bagel Fat One", "Arial Rounded MT Bold", sans-serif;
+    font-size: clamp(2.4rem, 10vw, 3.6rem);
+    line-height: 1;
+    margin: 8px 0 6px;
+    font-variant-numeric: tabular-nums;
+    color: var(--grape);
+  }
+
+  /* Progress */
+  .progress { display: flex; align-items: center; gap: 14px; margin: 0 0 18px; flex-wrap: wrap; }
+  .progress strong { font-size: 1.15rem; font-weight: 800; }
+  .bar { flex: 1 1 200px; height: 18px; border: 3px solid var(--line); border-radius: 99px; background: var(--surface); overflow: hidden; }
+  .fill {
+    height: 100%; width: 0%;
+    background: repeating-linear-gradient(-45deg, var(--pink) 0 12px, var(--tangerine) 12px 24px, var(--sun) 24px 36px, var(--mint) 36px 48px, var(--sky) 48px 60px, var(--grape) 60px 72px);
+    transition: width .6s cubic-bezier(.3,1.4,.5,1);
+  }
+
+  /* Grid */
+  .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
+  @media (max-width: 760px) { .grid { grid-template-columns: repeat(5, 1fr); gap: 10px; } }
+  @media (max-width: 520px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+  .tile {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    perspective: 700px;
+    border: 0; padding: 0; background: none;
+    font: inherit; color: inherit; cursor: pointer;
+  }
+  .tile:disabled { cursor: default; }
+  .inner {
+    position: absolute; inset: 0;
+    transform-style: preserve-3d;
+    transition: transform .7s cubic-bezier(.3,1.3,.5,1);
+  }
+  .tile.open .inner { transform: rotateY(180deg); }
+  .face {
+    position: absolute; inset: 0;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    border: 3px solid var(--line);
+    border-radius: 22px;
+    box-shadow: 4px 4px 0 var(--shadow);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .front {
+    background: var(--locked);
+    font-family: "Bagel Fat One", "Arial Rounded MT Bold", sans-serif;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    color: var(--c);
+    -webkit-text-stroke: 2px var(--line);
+    paint-order: stroke fill;
+  }
+  .front::after {
+    content: ""; position: absolute; width: 26%; height: 26%;
+    right: 9%; top: 9%; border-radius: 50%;
+    background: var(--c); opacity: .25;
+  }
+  .tile:not(:disabled):hover .front { transform: rotate(-3deg) scale(1.04); }
+  .front { transition: transform .15s; }
+  .back {
+    transform: rotateY(180deg);
+    background: var(--c);
+    color: var(--tile-ink);
+    flex-direction: column;
+    font-family: "Bagel Fat One", "Arial Rounded MT Bold", sans-serif;
+  }
+  .back .n { font-size: clamp(1.8rem, 5vw, 2.8rem); line-height: 1; }
+  .back .peek { font-family: "Gabarito", sans-serif; font-weight: 800; font-size: .8rem; margin-top: 6px; opacity: .8; }
+  .tile.today .back { box-shadow: 4px 4px 0 var(--shadow), 0 0 0 5px var(--sun); }
+  .tile.pick .front { background: var(--c); color: var(--tile-ink); -webkit-text-stroke: 0; }
+
+  /* Fact dialog */
+  dialog {
+    border: 3px solid var(--line);
+    border-radius: 28px;
+    padding: 0;
+    max-width: min(520px, calc(100vw - 32px));
+    width: 100%;
+    background: var(--surface);
+    color: var(--ink);
+    box-shadow: 8px 8px 0 var(--shadow);
+  }
+  dialog::backdrop { background: rgba(28, 16, 48, .55); }
+  .dhead {
+    background: var(--c, var(--pink));
+    color: var(--tile-ink);
+    padding: 20px 24px 14px;
+    border-bottom: 3px solid var(--line);
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 12px;
+  }
+  .dhead .big { font-family: "Bagel Fat One", "Arial Rounded MT Bold", sans-serif; font-size: 4.5rem; line-height: .9; }
+  .dhead .when { font-weight: 600; font-size: .95rem; text-align: right; }
+  .dbody { padding: 20px 24px 24px; }
+  .dbody h3 { margin: 0 0 8px; font-size: 1.35rem; font-weight: 800; line-height: 1.25; }
+  .dbody p { margin: 0 0 20px; color: var(--ink-soft); font-size: 1.05rem; }
+  .dbody .btn { width: 100%; }
+
+  /* Finale banner */
+  .finale {
+    display: none;
+    text-align: center;
+    background: var(--mint);
+    color: #2A1450;
+    border: 3px solid var(--line);
+    border-radius: 28px;
+    box-shadow: 6px 6px 0 var(--shadow);
+    padding: 24px;
+    margin: 0 auto 36px;
+    max-width: 560px;
+  }
+  .finale.on { display: block; }
+  .finale h2 { font-family: "Bagel Fat One", "Arial Rounded MT Bold", sans-serif; font-weight: 400; font-size: 2.2rem; margin: 0 0 6px; line-height: 1.05; }
+  .finale p { margin: 0; font-weight: 600; }
+
+  .foot { margin-top: 40px; text-align: center; color: var(--ink-soft); font-size: .95rem; }
+  .link { font: inherit; color: var(--ink-soft); background: none; border: 0; text-decoration: underline; cursor: pointer; padding: 4px; }
+  .sync { display: block; margin-bottom: 6px; }
+
+  /* Confetti */
+  .confetti { position: fixed; inset: 0; pointer-events: none; z-index: 50; overflow: hidden; }
+  .bit { position: absolute; top: -20px; width: 10px; height: 14px; border-radius: 3px; animation: fall linear forwards; }
+  @keyframes fall { to { transform: translateY(110vh) rotate(720deg); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .inner, .fill, .front { transition: none; }
+    .confetti { display: none; }
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="hero">
+    <h1 class="title" id="title" aria-label="Thirty Days of Facts"></h1>
+    <p class="lede">Shoot your shot! Who's the lucky star today? </p>
+  </header>
+
+  <section class="finale" id="finale" aria-live="polite">
+    <h2>All 30 unlocked!</h2>
+    <p>Every star is open. Tap any tile to read it again.</p>
+  </section>
+
+  <section class="picker" id="picker" aria-live="polite">
+    <div id="pickForm">
+      <h2>Today’s star is waiting</h2>
+      <p>Tap any closed tile below to open it.</p>
+      <div class="msg" id="msg"></div>
+    </div>
+    <div class="wait" id="wait">
+      <h2>You’ve opened today’s star</h2>
+      <div class="clock" id="clock">--:--:--</div>
+      <p>until your next star unlocks</p>
+      <button class="btn" type="button" id="rereadBtn">Read today’s fact</button>
+    </div>
+  </section>
+
+  <div class="progress">
+    <strong id="count">0 of 30 opened</strong>
+    <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="30" aria-valuenow="0" id="bar"><div class="fill" id="fill"></div></div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <footer class="foot">
+    <span class="sync" id="sync">Saved on this device only</span>
+    <button class="link" type="button" id="resetBtn">Start over</button>
+  </footer>
+</main>
+
+<dialog id="dlg" aria-labelledby="dTitle">
+  <div class="dhead" id="dHead">
+    <div class="big" id="dNum">7</div>
+    <div class="when" id="dWhen"></div>
+  </div>
+  <div class="dbody">
+    <h3 id="dTitle"></h3>
+    <p id="dText"></p>
+    <button class="btn" type="button" id="dClose">Close</button>
+  </div>
+</dialog>
+
+<script>
+// ——— Edit your facts here: one title + one sentence per number ———
+const FACTS = {
+  1:  ["Hold On", "Sea otters hold hands while sleeping to keep from drifting apart in open water, forming floating groups called 'rafts'"],
+  2:  ["Inside out", "Frogs throw up their entire stomach when they swallow something toxic. They literally push their stomach out of their mouth, wipe it clean with their front legs, and swallow it back down."],
+  3:  ["Fantasy Land", "Scotland's national animal is the Unicorn. It was chosen centuries ago as a symbol of purity, wildness, and dominant power in heraldry."],
+  4:  ["Lucky Heels?", "High heels were originally designed for men. Persian horseback warriors in the 10th century wore them to secure their feet in stirrups while shooting arrows."],
+  5:  ["Moo-ving", "Cows have best friends and experience measurable stress levels and elevated heart rates when separated from them."],
+  6:  ["Saucing it", "Ketchup was sold as medicine in the 1830s. A doctor named John Cook Bennett claimed tomato sauce could cure indigestion, diarrhea, and jaundice, selling it in pill form."],
+  7:  ["Ugh! Consumerism", "There are more artificial pink flamingos in the world than real ones. Lawn ornaments outnumber the wild bird population by millions."],
+  8:  ["Throwing UP?", "Astronauts burp differently in microgravity. Without gravity to separate gas from liquids in the stomach, burping almost always brings up liquid along with the air."],
+  9:  ["Lick it up", "Every person has a completely unique tongue print, just like a fingerprint."],
+  10: ["Frank-Einstein", "Albert Einstein's brain was stolen by the pathologist who performed his autopsy. Thomas Harvey kept it preserved in glass jars inside a cider box for decades to study it."],
+  11: ["Five more minutes!", "Before alarm clocks, people called 'knocker-uppers' were paid to shoot dried peas at bedroom windows with blowpipes to wake workers up."],
+  12: ["Queer", "Oysters can change their sex multiple times throughout their life. Depending on water temperature, food availability, and population dynamics, an oyster switches between male and female."],
+  13: ["High-ly intelligent", "Dolphins intentionally get high on pufferfish. They catch pufferfish, gently pass them around like a joint, and ingest small amounts of neurotoxin to enter a trance-like state."],
+  14: ["Two steps forward, one step Forward???", "Kangaroos can't walk backward. Their tail acts as a third leg and their tendon structure creates a spring mechanism that only propels them forward efficiently."],
+  15: ["Zombie Attack", "Your brain eats itself when deprived of sleep. During chronic sleep deprivation, microglial cells in the brain enter overdrive and start clearing out healthy synapses alongside cellular debris."],
+  16: ["Soul mates", "Quantum entanglement means two particles can stay instantaneously connected across millions of light-years; changing the state of one immediately updates the other."],
+  17: ["Hmm.. Yumm..", "The center of our galaxy smells like raspberries and rum. Along with ethyl alcohol, Sagittarius B2 is packed with ethyl formate, giving the deep void of space a distinctly tropical aroma."],
+  18: ["That doesn't look right", "The universe has an official average color, and it’s called 'Cosmic Latte.' In 2002, astronomers averaged the light from over 200,000 galaxies and found the universe is a beige-white shade."],
+  19: ["ummm... I forgot", "The 'Doorway Effect' is real. Walking through a doorway triggers a 'boundary reset' in your brain, archiving your previous room's thoughts to prep for the new environment—which is why you walk into a room and forget what you came for."],
+  20: ["Sticky business", "Honey never sticks to a wet spoon. If you dip a spoon in cold water before dipping it into honey or peanut butter, the liquid slips right off without leaving a sticky mess."],
+  21: ["Really???", "The 'elevator close door' button is often a placebo. In the US, accessibility laws require doors to remain open long enough for individuals with mobility challenges, rendering the close button inactive during standard operation in many modern buildings."],
+  22: ["Hot heads", "Yawning isn't just about oxygen. It acts as a radiator flush for your head, bringing in cool air to regulate your brain's temperature when it gets too warm or tired."],
+  23: ["Easy - Squeezy", "Cats don't have collarbones. Their shoulders are attached to their skeleton solely by muscle, allowing them to squeeze their bodies through any space wide enough for their head."],
+  24: ["Cat-Kiss", "A slow blink is a cat kiss. Closing their eyes around you shows total trust, as it lowers their defenses. Slow-blinking back communicates that you aren't a threat."],
+  25: ["Blue-black or White-Gold? Magenta!", "Magenta doesn't exist on the light spectrum. There is no single wavelength of light for magenta. When your eyes pick up red and blue wavelengths simultaneously without any green in between, your brain invents 'magenta' to bridge the gap."],
+  26: ["Gender Bias", "Pink was historically considered a strong color for boys. In the early 20th century, European and American fashion guides recommended pink for boys (as a lighter version of fiery red) and blue for girls (associated with delicacy). The convention flipped around the 1940s."],
+  27: ["Brightening up", "Flamingos are born gray. Their bright pink feathers come entirely from beta-carotene pigments in their diet of brine shrimp and blue-green algae."],
+  28: ["Girl code", "Female software engineers write code with higher acceptance rates. A massive study of open-source contributions on GitHub found that pull requests written by women had a higher acceptance rate than those written by men"],
+  29: ["Deadly sounds", "Saved by the bell comes from safety coffins—not boxing. In the 18th and 19th centuries, fear of being buried alive led to coffins fitted with a string tied to a bell above ground. If a prematurely buried person woke up, they rang the bell to alert the graveyard guard."],
+  30: ["OOPS!", "Spilling the beans comes from ancient Greek voting. Secret ballots were cast using colored beans—white for yes, black for no. If someone knocked over the jar and spilled the beans before counting, the secret results were revealed early."]
+};
+
+const COLORS = ["var(--pink)", "var(--sun)", "var(--sky)", "var(--tangerine)", "var(--mint)", "var(--grape)"];
+const LS_KEY = "thirty-facts-v1";
+const $ = id => document.getElementById(id);
+
+let state = { revealed: {}, start: null, resetAt: 0 }; // revealed: { "7": "2026-10-26" }
+
+// Title letters
+(function () {
+  const t = $("title");
+  "Wow That's so COOL".split("").forEach(ch => {
+    const s = document.createElement("span");
+    if (ch === " ") { s.className = "sp"; s.innerHTML = "&nbsp;"; s.setAttribute("aria-hidden", "true"); }
+    else { s.textContent = ch; s.setAttribute("aria-hidden", "true"); }
+    t.appendChild(s);
+  });
+})();
+
+function todayKey(d = new Date()) {
+  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+}
+function daysBetween(a, b) {
+  const [y1, m1, d1] = a.split("-").map(Number);
+  const [y2, m2, d2] = b.split("-").map(Number);
+  return Math.round((Date.UTC(y2, m2 - 1, d2) - Date.UTC(y1, m1 - 1, d1)) / 86400000);
+}
+function prettyDate(k) {
+  const [y, m, d] = k.split("-").map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString(undefined, { month: "short", day: "numeric" });
+}
+function openedCount() { return Object.keys(state.revealed).length; }
+function openedToday() {
+  const t = todayKey();
+  return Object.keys(state.revealed).find(n => state.revealed[n] === t) || null;
+}
+function allUnlocked() {
+  if (openedCount() >= 30) return true;
+  return !!state.start && daysBetween(state.start, todayKey()) >= 30;
+}
+function colorFor(n) { return COLORS[(n - 1) % COLORS.length]; }
+
+// ——— Storage: local cache first, synced account storage when available ———
+function loadLocal() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (raw) {
+      const s = JSON.parse(raw);
+      if (s && typeof s.revealed === "object") state = norm(s);
+    }
+  } catch (e) {}
+}
+function saveLocal() {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) {}
+}
+function norm(s) { return { revealed: (s && s.revealed) || {}, start: (s && s.start) || null, resetAt: (s && s.resetAt) || 0 }; }
+// Combine progress from two devices. A newer "Start over" wins outright; otherwise keep every reveal.
+function merge(a, b) {
+  a = norm(a); b = norm(b);
+  if (a.resetAt !== b.resetAt) return a.resetAt > b.resetAt ? a : b;
+  const revealed = Object.assign({}, b.revealed, a.revealed);
+  const starts = [a.start, b.start].filter(Boolean).sort();
+  return { revealed, start: starts[0] || null, resetAt: a.resetAt };
+}
+// Sync with the server at /api/progress when it exists (e.g. on Vercel).
+// Without it, the page still works and saves in this browser only.
+const API = "/api/progress";
+let remote = false;
+let writing = Promise.resolve();
+function save() {
+  saveLocal();
+  if (!remote) return;
+  const body = JSON.stringify(norm(state));
+  writing = writing.then(() => fetch(API, { method: "PUT", headers: { "Content-Type": "application/json" }, body }))
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(saved => { applyRemote(saved); setSync("Synced across your devices"); },
+          () => setSync("Saved on this device only"));
+}
+function setSync(t) { $("sync").textContent = t; }
+function applyRemote(data) {
+  if (!data || typeof data !== "object") return false;
+  const b = JSON.stringify(state);
+  state = merge(state, data);
+  const changed = JSON.stringify(state) !== b;
+  if (changed) { saveLocal(); render(); }
+  return changed;
+}
+async function pull() {
+  const r = await fetch(API, { cache: "no-store" });
+  if (!r.ok) throw new Error("no api");
+  return r.json();
+}
+async function connect() {
+  try {
+    const data = await pull();
+    remote = true;
+    setSync("Synced across your devices");
+    applyRemote(data);
+    if (!data || JSON.stringify(norm(data)) !== JSON.stringify(state)) save();
+  } catch (e) {
+    remote = false;
+    setSync("Saved on this device only");
+  }
+}
+// Pick up reveals made on another device when this tab comes back into view.
+document.addEventListener("visibilitychange", () => {
+  if (remote && document.visibilityState === "visible") pull().then(applyRemote).catch(() => {});
+});
+
+// ——— UI ———
+function buildGrid() {
+  const g = $("grid");
+  for (let n = 1; n <= 30; n++) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "tile";
+    b.dataset.n = n;
+    b.style.setProperty("--c", colorFor(n));
+    b.innerHTML = '<span class="inner"><span class="face front">' + n + '</span><span class="face back"><span class="n">' + n + '</span><span class="peek">' + FACTS[n][0] + '</span></span></span>';
+    b.addEventListener("click", () => onTile(n));
+    g.appendChild(b);
+  }
+}
+
+function render() {
+  const all = allUnlocked();
+  const today = openedToday();
+  const count = openedCount();
+  const shown = all ? 30 : count;
+
+  document.querySelectorAll(".tile").forEach(t => {
+    const n = t.dataset.n;
+    const open = all || !!state.revealed[n];
+    t.classList.toggle("open", open);
+    t.classList.toggle("today", !all && today === n);
+    t.disabled = !open && !!today;
+    t.setAttribute("aria-label", open ? "Number " + n + ": " + FACTS[n][0] + ". Read fact." : (today ? "Number " + n + ", locked until tomorrow" : "Number " + n + ", tap to open today’s fact"));
+  });
+
+  $("count").textContent = all ? "All 30 opened" : shown + " of 30 opened";
+  $("fill").style.width = (shown / 30 * 100) + "%";
+  $("bar").setAttribute("aria-valuenow", shown);
+  $("finale").classList.toggle("on", all);
+  $("picker").style.display = all ? "none" : "";
+  $("pickForm").style.display = today ? "none" : "";
+  $("wait").classList.toggle("on", !!today && !all);
+}
+
+function setMsg(t, err) { const m = $("msg"); m.textContent = t; m.classList.toggle("err", !!err); }
+
+function onTile(n) {
+  if (allUnlocked() || state.revealed[n]) return showFact(n);
+  if (openedToday()) return;
+  reveal(n);
+}
+
+let busy = false;
+async function reveal(n) {
+  if (busy) return;
+  busy = true;
+  try {
+    // Check the latest saved progress first, so two devices can't both open a number today.
+    if (remote) {
+      try { const data = await pull(); if (data) { state = merge(state, data); saveLocal(); } } catch (e) {}
+    }
+    if (openedToday() || state.revealed[n]) { render(); if (state.revealed[n]) showFact(n); return; }
+
+    const t = todayKey();
+    state.revealed[n] = t;
+    if (!state.start) state.start = t;
+    save();
+    render();
+    confetti();
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setTimeout(() => showFact(n), reduce ? 0 : 850);
+  } finally {
+    busy = false;
+  }
+}
+
+function showFact(n) {
+  const [title, text] = FACTS[n];
+  $("dHead").style.setProperty("--c", colorFor(n));
+  $("dNum").textContent = n;
+  const d = state.revealed[n];
+  $("dWhen").textContent = d ? "Opened " + prettyDate(d) : "Unlocked";
+  $("dTitle").textContent = title;
+  $("dText").textContent = text;
+  const dlg = $("dlg");
+  if (typeof dlg.showModal === "function") dlg.showModal(); else alert(title + "\n\n" + text);
+}
+
+function tick() {
+  const now = new Date();
+  const mid = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  let s = Math.max(0, Math.floor((mid - now) / 1000));
+  const h = Math.floor(s / 3600); s %= 3600;
+  const m = Math.floor(s / 60); s %= 60;
+  $("clock").textContent = [h, m, s].map(v => String(v).padStart(2, "0")).join(":");
+  if (tick.day && tick.day !== todayKey()) render(); // new day: unlock picker
+  tick.day = todayKey();
+}
+
+function confetti() {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const box = document.createElement("div");
+  box.className = "confetti";
+  const cs = ["#FF5FA2", "#FFD23F", "#4CC9F0", "#FF8A3D", "#3DDC97", "#8B6BFF"];
+  for (let i = 0; i < 90; i++) {
+    const b = document.createElement("span");
+    b.className = "bit";
+    b.style.left = Math.random() * 100 + "vw";
+    b.style.background = cs[i % cs.length];
+    b.style.animationDuration = (1.6 + Math.random() * 1.6) + "s";
+    b.style.animationDelay = (Math.random() * 0.4) + "s";
+    b.style.transform = "rotate(" + Math.random() * 360 + "deg)";
+    box.appendChild(b);
+  }
+  document.body.appendChild(box);
+  setTimeout(() => box.remove(), 3800);
+}
+
+// ——— Wire up ———
+$("rereadBtn").addEventListener("click", () => { const n = openedToday(); if (n) showFact(n); });
+$("dClose").addEventListener("click", () => $("dlg").close());
+$("dlg").addEventListener("click", e => { if (e.target === $("dlg")) $("dlg").close(); });
+$("resetBtn").addEventListener("click", () => {
+  if (!confirm("Start over? This closes every tile and resets your 30 days.")) return;
+  state = { revealed: {}, start: null, resetAt: Date.now() };
+  save();
+  setMsg("");
+  render();
+});
+
+loadLocal();
+buildGrid();
+render();
+tick();
+setInterval(tick, 1000);
+connect();
+</script>
+</body>
+</html>
